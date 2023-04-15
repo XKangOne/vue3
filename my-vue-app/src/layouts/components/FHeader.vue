@@ -99,6 +99,7 @@ const onSubmit = () => {
     }
     // loading.value = true
 
+    formDrawerRef.value.showLoading()
     setTimeout(() => {
       updatepassword(form)
         .then((res) => {
@@ -116,7 +117,7 @@ const onSubmit = () => {
           }
         })
         .finally(() => {
-          loading.value = false
+          formDrawerRef.value.hideLoading()
         })
     }, 1000);
   })

@@ -21,19 +21,27 @@ const props = defineProps({
     }
 })
 
+//让提交按钮有加载状态
+const loading = ref(false)
+const showLoading = () => loading.value = true
+const hideLoading = () => loading.value = false
+
 //打开
 const open = ()=>showDrawer.value = true
 
 //关闭
 const close = ()=>showDrawer.value = false
 
-//提交S
+//提交
 const emit = defineEmits(["sumbit"])
 const onSumbit = () => emit("sumbit")
 
 //向父组件暴露以下方法
 defineExpose({
-    open,close
+    open,
+    close,
+    showLoading,
+    hideLoading
 })
 </script>
 <template>
@@ -45,7 +53,7 @@ defineExpose({
             </div>
 
             <div class="actions">
-                <el-button type="primary" @click="onSumbit">{{confirmText}}</el-button>
+                <el-button type="primary" @click="onSumbit" :loading="loading">{{confirmText}}</el-button>
                 <el-button type="default" @click="close">取消</el-button>
             </div>
         </div>
