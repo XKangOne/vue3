@@ -8,7 +8,7 @@ import { getToken} from '~/composables/auth'
 import { toast } from '~/composables/util';
 
 const service = axios.create({
-    baseURL:"http://127.0.0.1:4523/m1/2571712-0-default/api"
+    baseURL:"http://127.0.0.1:4523/m1/2571712-0-default"
 })
 // 添加请求拦截
 service.interceptors.request.use(function(config){
@@ -19,7 +19,7 @@ service.interceptors.request.use(function(config){
     
     //如果不空 向header 中添加token
     if(token){
-        config.headers['token'] = token
+        config.headers["token"] = token
     }
     return config;
 },function(error){ 
@@ -38,6 +38,7 @@ service.interceptors.response.use(function(res){
     //     duration:2000
     // })
     toast('登录失败','error')
+    // toast(error.response.data.msg || '请求失败',)
     return Promise.reject(error)
 })
 

@@ -18,7 +18,7 @@ import { useAdminStore } from '~/store'
 const router = useRouter()
 const store = useAdminStore()
 
-const { adminLogin } = store
+const { login } = store
 
 const form = reactive({
     username:'admin',
@@ -106,7 +106,7 @@ const onsubmit = () =>{
         loading.value = true
 
         setTimeout(() =>{  
-            adminLogin(form.username,form.password).then((res)=>{
+            login(form.username,form.password).then((res)=>{
                 console.log(res)
                 toast(res.msg)
                 if(res.code === 1){
@@ -137,11 +137,11 @@ onBeforeUnmount(() =>{
 <template>
     <div>
         <el-row class="w-full h-screen bg">
-            <el-col :span="12" class="bg-indigo-500 flex justify-center items-center bg-indigo-500 text-light-50 flex-col ">
+            <el-col :lg="12" :md="12" class="bg-indigo-500 flex justify-center items-center bg-indigo-500 text-light-50 flex-col ">
                 <p class=" text-5xl font-bold mb-4">shop admin</p>
                 <p class=" text-3xl">基于vue3和vite后台管理系统</p>
             </el-col>
-            <el-col :lg="12" :md="12" class="flex flex-col justify-center items-center">
+            <el-col :lg="12" :md="24" class="flex flex-col justify-center items-center">
                 <h2>后台登录</h2>
                 <div class="flex justify-center items-center my-5 space-x-2">
                     <span class="h-[1px] w-16 bg-gray-200"></span>
