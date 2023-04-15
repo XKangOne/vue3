@@ -161,7 +161,7 @@ onBeforeUnmount(() =>{
                     </el-form-item>
 
                     <el-form-item label="Password" prop="password">
-                        <el-input type="password" placeholder="Password" v-model="form.password" >
+                        <el-input type="password" placeholder="Password" v-model="form.password" show-password>
                         <template #prefix>
                                 <el-icon>
                                     <lock></lock>

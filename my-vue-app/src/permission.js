@@ -4,7 +4,7 @@ import {
   toast, showFullLoading,
   hideFullLoading
 } from "~/composables/util"
-// import { useAdminStore } from './store'
+import { useAdminStore } from './store'
 
 
 // 全局前置守卫
@@ -13,9 +13,9 @@ router.beforeEach((to, from, next) => {
   // 显示进度条
   showFullLoading()
 
-  // const store = useAdminStore()
+  const store = useAdminStore()
 
-  // const { getInfo } = store
+  const { getInfo } = store
 
   const token = getToken()
 
@@ -31,10 +31,10 @@ router.beforeEach((to, from, next) => {
     return next({ path: from.path ? from.path : "/" })
   }
 
-  // 如果用户登录了，则获取用户信息并存储在 pinia 中
-  // if (token) {
-  //   getInfo()
-  // }
+  //如果用户登录了，则获取用户信息并存储在 pinia 中
+  if (token) {
+    getInfo()
+  }
 
 
   // 设置页面标题

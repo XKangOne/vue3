@@ -6,7 +6,7 @@ import { useRouter } from "vue-router"
 import { useFullscreen } from '@vueuse/core'
 import { showModal, toast } from "~/composables/util"
 import { updatepassword } from "~/api/admin"
-// import FormDrawer from '~/components/FormDrawer.vue'
+import FormDrawer from '~/components/FormDrawer.vue'
 
 const {
   // 是否全屏状态
@@ -42,10 +42,12 @@ getInfo()
 
 
 // 修改密码
-const showDrawer = ref(false)
+// const showDrawer = ref(false)
+const formDrawerRef = ref(null)
 
 const rePassword = () => {
-  showDrawer.value = true
+  // showDrawer.value = true
+  formDrawerRef.value.open()
 }
 
 const form = reactive({
@@ -95,7 +97,7 @@ const onSubmit = () => {
     if (!valid) {
       return false
     }
-    loading.value = true
+    // loading.value = true
 
     setTimeout(() => {
       updatepassword(form)
@@ -103,7 +105,7 @@ const onSubmit = () => {
           console.log(res);
           if (res.code == 1) {
             toast("修改密码成功，请重新登录")
-            showDrawer.value = false
+            // showDrawer.value = false
             // 调用 store 中的 logout 方法
             logout().then(() => {
               // 跳转回登录页
@@ -170,13 +172,23 @@ const onSubmit = () => {
     </div>
   </div>
 
-  <!-- <FormDrawer>
-    123
-  </FormDrawer> -->
+  <FormDrawer ref="formDrawerRef" destroyOnClose @sumbit="onSubmit" title="修改密码">
+    <el-form ref="formRef" :rules="rules" :model="form" label-width="80px">
+      <el-form-item prop="oldpassword" label="旧密码">
+        <el-input v-model="form.oldpassword" placeholder="请输入旧密码"></el-input>
+      </el-form-item>
+      <el-form-item prop="password" label="新密码">
+        <el-input type="password" v-model="form.password" placeholder="请输入密码" show-password></el-input>
+      </el-form-item>
+      <el-form-item prop="repassword" label="确认密码">
+        <el-input type="password" v-model="form.repassword" placeholder="请输入确认密码" show-password></el-input>
+      </el-form-item>
+    </el-form>
+  </FormDrawer>
 
   <!-- 抽屉 -->
   <!-- :close-on-click-modal="true" 点击阴影部分也能关闭 -->
-  <el-drawer v-model="showDrawer" title="修改密码" size="35%" :close-on-click-modal="true">
+  <!-- <el-drawer v-model="showDrawer" title="修改密码" size="35%" :close-on-click-modal="true">
     <el-form ref="formRef" :rules="rules" :model="form" label-width="80px">
       <el-form-item prop="oldpassword" label="旧密码">
         <el-input v-model="form.oldpassword" placeholder="请输入旧密码"></el-input>
@@ -193,7 +205,7 @@ const onSubmit = () => {
         </el-button>
       </el-form-item>
     </el-form>
-  </el-drawer>
+  </el-drawer> -->
 </template>
 
 <style scoped>

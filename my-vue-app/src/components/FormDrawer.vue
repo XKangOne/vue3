@@ -15,7 +15,7 @@ const props = defineProps({
         type:Boolean,
         default: false
     },
-    conirmText:{
+    confirmText:{
         type:String,
         default:"提交"
     }
@@ -27,21 +27,26 @@ const open = ()=>showDrawer.value = true
 //关闭
 const close = ()=>showDrawer.value = false
 
+//提交S
+const emit = defineEmits(["sumbit"])
+const onSumbit = () => emit("sumbit")
+
 //向父组件暴露以下方法
 defineExpose({
     open,close
 })
 </script>
 <template>
-   <el-drawer v-model="showDrawer" title="修改密码" size="45%" :close-on-click-modal="true">
+   <el-drawer v-model="showDrawer" :title="title" :size="size" :destroy-on-close="destroyOnClose"
+    :close-on-click-modal="true">
         <div class="form-drawer">
             <div class="body">
                 <slot></slot>
             </div>
 
             <div class="actions">
-                <el-button type="primary">提交</el-button>
-                <el-button type="default">取消</el-button>
+                <el-button type="primary" @click="onSumbit">{{confirmText}}</el-button>
+                <el-button type="default" @click="close">取消</el-button>
             </div>
         </div>
    </el-drawer>
