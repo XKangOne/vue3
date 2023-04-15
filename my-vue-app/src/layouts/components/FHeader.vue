@@ -1,14 +1,14 @@
 <script setup>
-import { ref, reactive } from 'vue'
+// import { ref, reactive } from 'vue'
 import { useAdminStore } from '~/store'
 import { storeToRefs } from 'pinia'
 // import { useRouter } from "vue-router"
 import { useFullscreen } from '@vueuse/core'
 // import { showModal, toast } from "~/composables/util"
-import { toast } from "~/composables/util"
-import { updatepassword } from "~/api/admin"
+// import { toast } from "~/composables/util"
+// import { updatepassword } from "~/api/admin"
 import FormDrawer from '~/components/FormDrawer.vue'
-import { useLogout } from "~/composables/useAdmin"
+import { useLogout, useRepassword} from "~/composables/useAdmin"
 
 //这边是有括号的不然没有反应
 const { handleLogout } = useLogout()
@@ -29,7 +29,19 @@ const store = useAdminStore()
 const { adminInfo,sideWidth} = storeToRefs(store)
 
 //拿的是store中 index.js 中的函数 
-const { logout, handleSideWidth } = store
+// const { logout, handleSideWidth } = store
+const { handleSideWidth } = store
+
+
+const{
+  formDrawerRef,
+  form,
+  rules,
+  formRef,
+  onSubmit,
+  openRepasswordForm
+} = useRepassword()
+
 
 // const router = useRouter()
 
@@ -49,85 +61,85 @@ const { logout, handleSideWidth } = store
 
 // 修改密码
 // const showDrawer = ref(false)
-const formDrawerRef = ref(null)
+// const formDrawerRef = ref(null)
 
-const rePassword = () => {
-  // showDrawer.value = true
-  formDrawerRef.value.open()
-}
+// const rePassword = () => {
+//   // showDrawer.value = true
+//   formDrawerRef.value.open()
+// }
 
-const form = reactive({
-  oldpassword: "123456",
-  password: "admin",
-  repassword: "admin"
-})
+// const form = reactive({
+//   oldpassword: "123456",
+//   password: "admin",
+//   repassword: "admin"
+// })
 
-const rePassRule = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('确认密码不能为空！'))
-  } else if (value !== form.password) {
-    callback(new Error("确认密码必须和新密码一致！"))
-  } else {
-    callback()
-  }
-}
+// const rePassRule = (rule, value, callback) => {
+//   if (value === '') {
+//     callback(new Error('确认密码不能为空！'))
+//   } else if (value !== form.password) {
+//     callback(new Error("确认密码必须和新密码一致！"))
+//   } else {
+//     callback()
+//   }
+// }
 
-const rules = {
-  oldpassword: [
-    {
-      required: true,
-      message: '旧密码不能为空',
-      trigger: 'blur'
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: '新密码不能为空',
-      trigger: 'blur'
-    },
-  ],
-  repassword: [
-    {
-      validator: rePassRule,
-      trigger: 'blur'
-    }
-  ]
-}
+// const rules = {
+//   oldpassword: [
+//     {
+//       required: true,
+//       message: '旧密码不能为空',
+//       trigger: 'blur'
+//     },
+//   ],
+//   password: [
+//     {
+//       required: true,
+//       message: '新密码不能为空',
+//       trigger: 'blur'
+//     },
+//   ],
+//   repassword: [
+//     {
+//       validator: rePassRule,
+//       trigger: 'blur'
+//     }
+//   ]
+// }
 
-const formRef = ref(null)
-const loading = ref(false)
+// const formRef = ref(null)
+// const loading = ref(false)
 
-const onSubmit = () => {
-  formRef.value.validate((valid) => {
-    if (!valid) {
-      return false
-    }
-    // loading.value = true
+// const onSubmit = () => {
+//   formRef.value.validate((valid) => {
+//     if (!valid) {
+//       return false
+//     }
+//     // loading.value = true
 
-    formDrawerRef.value.showLoading()
-    setTimeout(() => {
-      updatepassword(form)
-        .then((res) => {
-          console.log(res);
-          if (res.code == 1) {
-            toast("修改密码成功，请重新登录")
-            // showDrawer.value = false
-            // 调用 store 中的 logout 方法
-            logout().then(() => {
-              // 跳转回登录页
-              router.push("/login")
-            })
-          } else {
-            toast(res.msg, 'error')
-          }
-        })
-        .finally(() => {
-          formDrawerRef.value.hideLoading()
-        })
-    }, 1000);
-  })
-}
+//     formDrawerRef.value.showLoading()
+//     setTimeout(() => {
+//       updatepassword(form)
+//         .then((res) => {
+//           console.log(res);
+//           if (res.code == 1) {
+//             toast("修改密码成功，请重新登录")
+//             // showDrawer.value = false
+//             // 调用 store 中的 logout 方法
+//             logout().then(() => {
+//               // 跳转回登录页
+//               router.push("/login")
+//             })
+//           } else {
+//             toast(res.msg, 'error')
+//           }
+//         })
+//         .finally(() => {
+//           formDrawerRef.value.hideLoading()
+//         })
+//     }, 1000);
+//   })
+// }
 
 </script>
 
@@ -172,7 +184,7 @@ const onSubmit = () => {
           </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="rePassword">修改密码</el-dropdown-item>
+            <el-dropdown-item @click="openRepasswordForm">修改密码</el-dropdown-item>
             <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
