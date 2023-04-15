@@ -2,11 +2,16 @@
 import { ref, reactive } from 'vue'
 import { useAdminStore } from '~/store'
 import { storeToRefs } from 'pinia'
-import { useRouter } from "vue-router"
+// import { useRouter } from "vue-router"
 import { useFullscreen } from '@vueuse/core'
-import { showModal, toast } from "~/composables/util"
+// import { showModal, toast } from "~/composables/util"
+import { toast } from "~/composables/util"
 import { updatepassword } from "~/api/admin"
 import FormDrawer from '~/components/FormDrawer.vue'
+import { useLogout } from "~/composables/useAdmin"
+
+//这边是有括号的不然没有反应
+const { handleLogout } = useLogout()
 
 const {
   // 是否全屏状态
@@ -19,30 +24,28 @@ const {
 const handleRefresh = () => location.reload()
 
 const store = useAdminStore()
-//拿的是store中的值
+
+//拿的是store中 index.js 中的值
 const { adminInfo,sideWidth} = storeToRefs(store)
 
-//拿的是store 中的函数
-const { logout,getInfo, handleSideWidth } = store
+//拿的是store中 index.js 中的函数 
+const { logout, handleSideWidth } = store
 
-const router = useRouter()
+// const router = useRouter()
 
-const handleLogout = () => {
-  showModal("是否要退出登录？").then((res) => {
-    logout()
-      .finally(() => {
-        // 调用store的登出方法
-        logout()
-        // 跳转回登录页
-        router.push("/login")
-        // 提示退出登录成功
-        toast("退出登录成功")
-      })
-  })
-}
-
-getInfo()
-
+// const handleLogout = () => {
+//   showModal("是否要退出登录？").then((res) => {
+//     logout()
+//       .finally(() => {
+//         // 调用store的登出方法
+//         logout()
+//         // 跳转回登录页
+//         router.push("/login")
+//         // 提示退出登录成功
+//         toast("退出登录成功")
+//       })
+//   })
+// }
 
 // 修改密码
 // const showDrawer = ref(false)

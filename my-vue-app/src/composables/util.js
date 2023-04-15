@@ -18,6 +18,7 @@ export function showFullLoading() {
 export function hideFullLoading() {
     nprogress.done()
 }
+//退出登录时使用的
 export function showModal(content = "提示内容",type = "warning",title = "") {
     return ElMessageBox.confirm(
         content,
