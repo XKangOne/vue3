@@ -19,8 +19,11 @@ const {
 const handleRefresh = () => location.reload()
 
 const store = useAdminStore()
-const { adminInfo } = storeToRefs(store)
-const { logout,getInfo } = store
+//拿的是store中的值
+const { adminInfo,sideWidth} = storeToRefs(store)
+
+//拿的是store 中的函数
+const { logout,getInfo, handleSideWidth } = store
 
 const router = useRouter()
 
@@ -127,15 +130,16 @@ const onSubmit = () => {
 
 <template>
   <div class="f-header v-center">
-    <div class="f-center text-xl bg-blue-300 h-full" style="width:220px;">
+    <div class="f-center text-xl transition-all duration-500" :style="{width:sideWidth}">
       <el-icon class="icon-btn">
         <ElementPlus />
       </el-icon>
-      极客空间
+      <span v-if="sideWidth == '220px'">极客空间</span>
     </div>
 
-    <el-icon class="icon-btn">
-      <Fold />
+    <el-icon class="icon-btn" @click="handleSideWidth">
+      <Fold v-if="sideWidth == '220px'" />
+      <Expand v-else />
     </el-icon>
 
 

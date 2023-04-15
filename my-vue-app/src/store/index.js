@@ -5,7 +5,8 @@ import { setToken, removeToken } from '~/composables/auth'
 export const useAdminStore = defineStore('admin', {
   state: () => ({
     //管理员信息
-    adminInfo: {}
+    adminInfo: {},
+    sideWidth:'220px'
   }),
   actions: {
     // 登录
@@ -38,6 +39,10 @@ export const useAdminStore = defineStore('admin', {
         }).catch(err => reject(err))
       })
     },
+    //伸缩
+    handleSideWidth(){
+      this.sideWidth = this.sideWidth === '220px' ? '80px' : '220px'
+    }
   }
 })
 
