@@ -137,12 +137,12 @@ onBeforeUnmount(() =>{
 <template>
     <div>
         <el-row class="w-full h-screen bg">
-            <el-col :lg="12" :md="12" class="bg-indigo-500 flex justify-center items-center bg-indigo-500 text-light-50 flex-col ">
+            <el-col :lg="12" :md="12" class=" flex justify-center items-center  text-light-50 flex-col bg-gradient-to-r ">
                 <p class=" text-5xl font-bold mb-4">shop admin</p>
                 <p class=" text-3xl">基于vue3和vite后台管理系统</p>
             </el-col>
-            <el-col :lg="12" :md="24" class="flex flex-col justify-center items-center">
-                <h2>后台登录</h2>
+            <el-col :lg="12" :md="12" class="flex flex-col justify-center items-center">
+                <h2 class="text-gray-300 text-3xl font-bold">后台登录</h2>
                 <div class="flex justify-center items-center my-5 space-x-2">
                     <span class="h-[1px] w-16 bg-gray-200"></span>
                     <span>账号密码登录</span>
@@ -150,8 +150,8 @@ onBeforeUnmount(() =>{
                 </div>
 
                 <el-form :model="form" :rules="rules" ref="formRef" class="w-[50%]">
-                    <el-form-item label="Username" prop="username">
-                        <el-input placeholder="Username" v-model="form.username">
+                    <el-form-item label="Username" prop="username" >
+                        <el-input placeholder="Username" v-model="form.username" class=" text-white rounded-full text-lg ">
                             <template #prefix>
                                 <el-icon>
                                     <user/>
@@ -161,7 +161,7 @@ onBeforeUnmount(() =>{
                     </el-form-item>
 
                     <el-form-item label="Password" prop="password">
-                        <el-input type="password" placeholder="Password" v-model="form.password" show-password>
+                        <el-input type="password" placeholder="Password" v-model="form.password" class=" text-white rounded-full text-lg "  show-password>
                         <template #prefix>
                                 <el-icon>
                                     <lock></lock>
@@ -180,5 +180,9 @@ onBeforeUnmount(() =>{
 </template>
 
 <style scoped>
-
+.bg{
+    background-image: url('../assets/image/1.jpg');
+   /* background-repeat: no-repeat; */
+   background-size: cover;
+}
 </style>

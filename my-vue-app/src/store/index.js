@@ -6,7 +6,8 @@ export const useAdminStore = defineStore('admin', {
   state: () => ({
     //管理员信息
     adminInfo: {},
-    sideWidth:'220px'
+    sideWidth:'220px',
+    menus:[]
   }),
   actions: {
     // 登录
@@ -22,7 +23,9 @@ export const useAdminStore = defineStore('admin', {
     getInfo() {
       return new Promise((resolve, reject) => {
         getInfo().then((res) => {
-          this.adminInfo = res.data
+          this.adminInfo = res.data.adminInfo
+          this.menus = res.data.menus
+          console.log(res.data.menus)
           resolve(res)
         }).catch(err => reject(err))
       })

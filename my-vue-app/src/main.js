@@ -4,7 +4,7 @@ import { createPinia } from 'pinia'
 // import './style.css'
 import App from './App.vue'
 // 引入路由
-import router from './router'
+import {router} from './router'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
